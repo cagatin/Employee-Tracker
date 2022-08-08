@@ -14,6 +14,7 @@ const mainMenu = [{
     type: "list",
     message: "What would you like to do?",
     choices: options,
+    pageSize: options.length,
     name: "menuChoice"
 }];
 
