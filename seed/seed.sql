@@ -21,4 +21,10 @@ VALUES
     ("Chief Marketing Officer", 90000, 5),
     ("Brand Manager", 98000, 5);
 
-    
+INSERT INTO employee
+    (first_name, last_name, role_id, manager_id)
+VALUES
+    ("Sandor", "Clegane", 1, null),
+    ("Arya", "Stark", 2, 1),
+    ("Tywin", "Lannister", 7, null),
+    ("Tyrion", "Lannister", 6, 3);
