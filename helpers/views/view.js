@@ -7,6 +7,7 @@ function viewDepartment() {
     database.query('SELECT * FROM department', (err, res) => {
         err ? console.log("Error retrieving Department Table", err) : console.table('\n', res);
     });
+    return;
 }
 
 // function to view ALL roles
@@ -22,6 +23,7 @@ function viewRole() {
     database.query(roleQuery, (err, res) => {
         err ? console.log("Error retrieving Role Table", err) : console.table('\n', res);
     });
+    return;
 }
 
 // function to view ALL roles
@@ -43,6 +45,7 @@ function viewEmployee() {
     database.query(empQuery, (err, res) => {
         err ? console.log("Error retrieving Employee Table", err) : console.table('\n', res);
     });
+    return;
 }
 
 module.exports = { viewDepartment, viewRole, viewEmployee }
