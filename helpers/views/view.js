@@ -1,6 +1,6 @@
 // Import required packages
 const cTable = require('console.table');
-const database = require('./config/connection');
+const database = require('../../config/connection');
 
 // function to view ALL deparments
 function viewDepartment() {

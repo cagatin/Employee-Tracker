@@ -3,6 +3,9 @@ const Inquirer = require('inquirer');
 const cTable = require('console.table');
 const database = require('./config/connection');
 
+// Importing helper functions
+const { viewDepartment, viewRole, viewEmployee } = require('./helpers/views/view');
+
 // Questions to prompt user upon starting the application
 const options = ["View All Departments", "View All Roles", "View All Employees", "Add a Department", "Add a Role", "Add an Employee", "Update an Employee Role", "Delete a Department", "Delete a Role", "Delete an Employee", "QUIT"];
 
@@ -23,13 +26,16 @@ async function init() {
 
         switch (selectedOption) {
             case "View All Departments":
-                // function to view all departments;
+                viewDepartment();
+                init()
                 return;
             case "View All Roles":
-                // function to view all roles;
+                viewRole();
+                init();
                 return;
             case "View All Employees":
-                // function to view all employees
+                viewEmployee();
+                init();
                 return;
             case "Add a Department":
                 // function to add a department
