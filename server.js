@@ -1,5 +1,6 @@
 // Importing necessary packages
 const express = require('express');
+const cTable = require('console.table');
 const database = require('./config/connection');
 
 // Create instance of express.

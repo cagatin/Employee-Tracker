@@ -31,13 +31,13 @@ database.query(createDPMNTTable, (err, res) => {
 });
 
 // Create the role table
-const createRoleTable = 'CREATE TABLE IF NOT EXISTS role(id INT PRIMARY KEY AUTO_INCREMENT NOT NULL, title VARCHAR(30) NOT NULL, salary DECIMAL NOT NULL, department_id INT, FOREIGN KEY (department_key) REFERENCES department(id) ON DELETE CASCADE)';
+const createRoleTable = 'CREATE TABLE IF NOT EXISTS role(id INT PRIMARY KEY AUTO_INCREMENT NOT NULL, title VARCHAR(30) NOT NULL, salary DECIMAL NOT NULL, department_id INT, FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE CASCADE)';
 database.query(createRoleTable, (err, res) => {
     err ? console.log('Error in creating Role Table', err) : console.log('Role table created');
 });
 
 // Create the employee table
-const createEmpTable = 'CREATE TABLE IF NOT EXISTS employee(id INT PRIMARY KEY AUTO INCREMENT NOT NULL, first_name VARCHAR(30) NOT NULL, last_name VARCHAR(30) NOT NULL, role_id INT, manager_id INT REFERENCES employee(id), FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE)';
+const createEmpTable = 'CREATE TABLE IF NOT EXISTS employee(id INT PRIMARY KEY AUTO_INCREMENT NOT NULL, first_name VARCHAR(30) NOT NULL, last_name VARCHAR(30) NOT NULL, role_id INT, manager_id INT REFERENCES employee(id), FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE)';
 database.query(createEmpTable, (err, res) => {
     err ? console.log('Error in creating Employee Table', err) : console.log('Employee table created');
 });
