@@ -11,7 +11,7 @@ function viewDepartment() {
 
 // function to view ALL roles
 function viewRole() {
-    database.query('SELECT * FROM roles', (err, res) => {
+    database.query('SELECT * FROM role', (err, res) => {
         err ? console.log("Error retrieving Role Table", err) : console.table(res);
     });
 }
