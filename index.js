@@ -28,12 +28,15 @@ async function init() {
         switch (selectedOption) {
             case "View All Departments":
                 viewDepartment();
+                init();
                 return;
             case "View All Roles":
                 viewRole();
+                init();
                 return;
             case "View All Employees":
                 viewEmployee();
+                init();
                 return;
             case "Add a Department":
                 // function to add a department
