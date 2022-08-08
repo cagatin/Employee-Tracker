@@ -11,14 +11,16 @@ const mainMenu = [{
     type: "list",
     message: "What would you like to do?",
     choices: options,
-    name: menuChoice
+    name: "menuChoice"
 }];
 
-async function init() {
-    let selectedOption = await Inquirer.prompt(mainMenu);
-    let continuePrompt = true;
+let continuePrompt = true;
 
+async function init() {
     while (continuePrompt) {
+        let selectedOptionData = await Inquirer.prompt(mainMenu);
+        let selectedOption = selectedOptionData.menuChoice;
+
         switch (selectedOption) {
             case "View All Departments":
                 // function to view all departments;
@@ -52,7 +54,10 @@ async function init() {
                 return;
             case "QUIT":
                 continuePrompt = false;
+                database.end();
                 return;
         }
     }
 }
+
+init();
