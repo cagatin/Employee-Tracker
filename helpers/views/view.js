@@ -5,21 +5,21 @@ const database = require('../../config/connection');
 // function to view ALL deparments
 function viewDepartment() {
     database.query('SELECT * FROM department', (err, res) => {
-        err ? console.log("Error retrieving Department Table", err) : console.table(res);
+        err ? console.log("Error retrieving Department Table", err) : console.table('\n', res);
     });
 }
 
 // function to view ALL roles
 function viewRole() {
     database.query('SELECT * FROM role', (err, res) => {
-        err ? console.log("Error retrieving Role Table", err) : console.table(res);
+        err ? console.log("Error retrieving Role Table", err) : console.table('\n', res);
     });
 }
 
 // function to view ALL roles
 function viewEmployee() {
     database.query('SELECT * FROM employee', (err, res) => {
-        err ? console.log("Error retrieving Employee Table", err) : console.table(res);
+        err ? console.log("Error retrieving Employee Table", err) : console.table('\n', res);
     });
 }
 
