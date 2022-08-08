@@ -10,8 +10,16 @@ function viewDepartment() {
 }
 
 // function to view ALL roles
+/*THEN I am presented with the job title, role id, the department that role belongs to, and the salary for that role
+*/
+let roleQuery = `
+SELECT r.id as ID, r.title as Title, dep.name as Department, r.salary as Salary
+FROM role as r
+LEFT JOIN department as dep
+ON r.department_id = dep.id
+`
 function viewRole() {
-    database.query('SELECT * FROM role', (err, res) => {
+    database.query(roleQuery, (err, res) => {
         err ? console.log("Error retrieving Role Table", err) : console.table('\n', res);
     });
 }
