@@ -4,6 +4,17 @@ const database = require('../../config/connection');
 const Inquirer = require('inquirer');
 const { default: inquirer } = require('inquirer');
 
+// Function to generate an array of Department names
+async function getDeptArray() {
+    let query = `
+    SELECT * FROM department
+    `;
+    const data = await database.promise().query(query);
+    const tableData = data[0];
+    console.log(data[0]);
+
+}
+
 // Function to capitalize the first letter in the user input
 function capitalize(str) {
     let arrStr = str.split(" ");
@@ -19,6 +30,20 @@ const addDeptQuestions = [{
     name: 'deptName'
 }]
 
+const addRoleQuestions = [
+    {
+        type: "input",
+        message: "What is the name of the role?",
+        name: 'name'
+    },
+    {
+        type: "input",
+        message: "What is the salary of the role?",
+        name: 'salary'
+    },
+]
+
+
 // Function to add a department
 async function addDepartment() {
     const deptToAddData = await Inquirer.prompt(addDeptQuestions);                         // prompt user what department to add.
@@ -27,10 +52,12 @@ async function addDepartment() {
     //determine if the department is already in the database
     let searchDept = `SELECT * FROM department WHERE name = ?`
     database.execute(searchDept, deptToAdd, (err, res) => {
+        // If the department is already present in the database, return
         if (res.length >= 1) {
             console.log("\n Department is already in the Database!");
             return;
         } else {
+            // Otherwise, add the department
             let deptQuery = `INSERT INTO department (name) VALUES (?);`
             database.execute(deptQuery, deptToAdd, (err) => {
                 if (err) {
@@ -42,5 +69,9 @@ async function addDepartment() {
     });
 }
 
+async function addRole() {
+    getDeptArray();
+}
 
-module.exports = { addDepartment } 
+
+module.exports = { addDepartment, addRole } 
