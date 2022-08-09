@@ -116,9 +116,15 @@ async function addRole() {
 }
 
 async function addEmployee() {
+    // retrieve array of job titles
     roleArray = await getTableArray('role', 'title');
-    console.log(roleArray);
 
+    // retrieve an array of manager names
+    let managerQuery = `SELECT * FROM employee WHERE manager_id IS NULL`;
+    let managerData = await database.promise().query(managerQuery);
+    let managerArr = managerData[0].map(item => item["first_name"]);
+
+    // questions to prompt user
     const addEmpQuestions = [
         {
             type: 'input',
@@ -133,10 +139,32 @@ async function addEmployee() {
         {
             type: 'list',
             message: 'What is the ROLE of the employee?',
-            choices: roleArr,
+            choices: roleArray,
             name: 'role'
+        },
+        {
+            type: 'list',
+            message: 'Who is the MANAGER of the employee?',
+            choices: managerArr,
+            name: 'manager'
         }
     ];
+
+    // prompt the user
+    const empData = await Inquirer.prompt(addEmpQuestions);
+
+    // extract the data
+    let first_name = empData.first;
+    let last_name = empData.last;
+    let role = empData.role;
+    let manager = empData.manager;
+
+    console.log(first_name, last_name, role, manager);
+
+    /* TODO
+     * GET ROLE ID OF THE EMPLOYEE TO ADD TO THE INSERT
+     * CHECK TO SEE IF THE MANAGER ROLE == DEPARTMENT 
+    */
 }
 
 
