@@ -99,9 +99,9 @@ async function addRole() {
 
     // check if the role exists in the table
     let existQuery = "SELECT * FROM role WHERE title = ?";
-    database.execute(existQuery, [role], (res) => {
-        if (res >= 1) {
-            console.log('Role already exists within the database!');
+    database.execute(existQuery, [role], (err, res) => {
+        if (res.length >= 1) {
+            console.log('\n Role already exists within the database!');
             return;
         } else {
             let createQuery = 'INSERT INTO role (title, salary, department_id) values (?, ?, ?);';
