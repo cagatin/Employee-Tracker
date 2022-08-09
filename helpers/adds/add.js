@@ -19,6 +19,9 @@ async function getDeptArray() {
     return tableData.map((item) => item['name']);
 }
 
+let deptArray;
+
+
 // Function to capitalize the first letter in the user input
 function capitalize(str) {
     let arrStr = str.split(" ");
@@ -32,20 +35,7 @@ const addDeptQuestions = [{
     type: "input",
     message: "What is the name of the department?",
     name: 'deptName'
-}]
-
-const addRoleQuestions = [
-    {
-        type: "input",
-        message: "What is the name of the role?",
-        name: 'name'
-    },
-    {
-        type: "input",
-        message: "What is the salary of the role?",
-        name: 'salary'
-    },
-]
+}];
 
 
 // Function to add a department
@@ -74,7 +64,28 @@ async function addDepartment() {
 }
 
 async function addRole() {
-    getDeptArray();
+    deptArray = await getDeptArray();
+    const addRoleQuestions = [
+        {
+            type: "input",
+            message: "What is the name of the role?",
+            name: 'name'
+        },
+        {
+            type: "input",
+            message: "What is the salary of the role?",
+            name: 'salary'
+        },
+        {
+            type: 'list',
+            message: 'What department does the role belong to?',
+            choices: deptArray,
+            name: 'dept'
+        }
+    ]
+
+    const roleData = await Inquirer.prompt(addRoleQuestions);
+    console.log(roleData);
 }
 
 
