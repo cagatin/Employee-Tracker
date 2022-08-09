@@ -9,10 +9,14 @@ async function getDeptArray() {
     let query = `
     SELECT * FROM department
     `;
+    // Query for department table
     const data = await database.promise().query(query);
-    const tableData = data[0];
-    console.log(data[0]);
 
+    // Extract table from query results
+    const tableData = data[0];
+
+    // Use array.map to retrieve only name: property values from the query result
+    return tableData.map((item) => item['name']);
 }
 
 // Function to capitalize the first letter in the user input
