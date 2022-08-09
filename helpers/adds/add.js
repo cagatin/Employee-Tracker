@@ -93,7 +93,26 @@ async function addRole() {
     let salary = roleData.salary;
     let dept = capitalize(roleData.dept);
 
-    // check if the role already exists within the database
+    // retrieve the department ID
+    let deptIDArr = await database.promise().query('SELECT * FROM department WHERE name = ?', dept, err => console.log(err));
+    let deptID = deptIDArr[0].map(item => item["id"])[0];
+
+    // check if the role exists in the table
+    let existQuery = "SELECT * FROM role WHERE title = ?";
+    database.execute(existQuery, [role], (res) => {
+        if (res >= 1) {
+            console.log('Role already exists within the database!');
+            return;
+        } else {
+            let createQuery = 'INSERT INTO role (title, salary, department_id) values (?, ?, ?);';
+            database.execute(createQuery, [role, salary, deptID], (err) => {
+                if (err) {
+                    console.log('Error in creating role!', err);
+                }
+            });
+            return;
+        }
+    });
 }
 
 
