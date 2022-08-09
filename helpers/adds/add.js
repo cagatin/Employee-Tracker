@@ -25,9 +25,9 @@ async function addDepartment() {
     const deptToAdd = [capitalize(deptToAddData.deptName)];                                 // extract the department name from the prompt and format the string
 
     //determine if the department is already in the database
-    let searchDept = `SELECT count(*) FROM department WHERE name = '?'`
+    let searchDept = `SELECT * FROM department WHERE name = ?`
     database.execute(searchDept, deptToAdd, (err, res) => {
-        if (res.length === 1) {
+        if (res.length >= 1) {
             console.log("\n Department is already in the Database!");
             return;
         } else {
@@ -37,7 +37,6 @@ async function addDepartment() {
                     console.log('\n Issue in creating department', err);
                 }
             });
-
             return;
         }
     });
