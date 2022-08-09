@@ -5,9 +5,9 @@ const Inquirer = require('inquirer');
 const { default: inquirer } = require('inquirer');
 
 // Function to generate an array of Department names
-async function getDeptArray() {
+async function getTableArray(table, property) {
     let query = `
-    SELECT * FROM department
+    SELECT * FROM ${table}
     `;
     // Query for department table
     const data = await database.promise().query(query);
@@ -16,7 +16,7 @@ async function getDeptArray() {
     const tableData = data[0];
 
     // Use array.map to retrieve only name: property values from the query result
-    return tableData.map((item) => item['name']);
+    return tableData.map((item) => item[`${property}`]);
 }
 
 let deptArray;
@@ -63,13 +63,14 @@ async function addDepartment() {
     });
 }
 
+// Function to add a role
 async function addRole() {
-    deptArray = await getDeptArray();
+    deptArray = await getTableArray('department', 'name');
     const addRoleQuestions = [
         {
             type: "input",
             message: "What is the name of the role?",
-            name: 'name'
+            name: 'role'
         },
         {
             type: "input",
@@ -82,10 +83,17 @@ async function addRole() {
             choices: deptArray,
             name: 'dept'
         }
-    ]
+    ];
 
+    // Prompt user on add role info
     const roleData = await Inquirer.prompt(addRoleQuestions);
-    console.log(roleData);
+
+    // extract info from data
+    let role = capitalize(roleData.role);
+    let salary = roleData.salary;
+    let dept = capitalize(roleData.dept);
+
+    // check if the role already exists within the database
 }
 
 
