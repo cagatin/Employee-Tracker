@@ -115,5 +115,29 @@ async function addRole() {
     });
 }
 
+async function addEmployee() {
+    roleArray = await getTableArray('role', 'title');
+    console.log(roleArray);
 
-module.exports = { addDepartment, addRole } 
+    const addEmpQuestions = [
+        {
+            type: 'input',
+            message: 'What is the FIRST NAME of the employee?',
+            name: 'first',
+        },
+        {
+            type: 'input',
+            message: 'What is the LAST NAME of the employee?',
+            name: 'last'
+        },
+        {
+            type: 'list',
+            message: 'What is the ROLE of the employee?',
+            choices: roleArr,
+            name: 'role'
+        }
+    ];
+}
+
+
+module.exports = { addDepartment, addRole, addEmployee } 

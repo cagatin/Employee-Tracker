@@ -5,7 +5,7 @@ const database = require('./config/connection');
 
 // Importing helper functions
 const { viewDepartment, viewRole, viewEmployee } = require('./helpers/views/view');
-const { addDepartment, addRole } = require('./helpers/adds/add');
+const { addDepartment, addRole, addEmployee } = require('./helpers/adds/add');
 
 // Questions to prompt user upon starting the application
 const options = ["View All Departments", "View All Roles", "View All Employees", "Add a Department", "Add a Role", "Add an Employee", "Update an Employee Role", "Delete a Department", "Delete a Role", "Delete an Employee", "QUIT"];
@@ -48,7 +48,8 @@ async function init() {
                 init();
                 return;
             case "Add an Employee":
-                // function to add an employee
+                await addEmployee();
+                init();
                 return;
             case "Update an Employee Role":
                 // function to update an employee role
