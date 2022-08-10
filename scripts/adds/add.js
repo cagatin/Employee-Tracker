@@ -154,8 +154,12 @@ async function addEmployee() {
 
 
     // Given the name of the role, retrieve the role ID
-    // emp
-
+    let roleIDQuery = `
+    SELECT * FROM role
+    WHERE title = ?
+    `
+    let roleIDData = await database.promise().query(roleIDQuery, role, (err) => console.log(err));
+    roleID = roleIDData[0].map(item => item.id);
 
     // Check to see if the employee is already in the Database
     let checkQuery = `
