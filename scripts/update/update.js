@@ -16,16 +16,15 @@ async function updateEmployee() {
         SELECT first_name, last_name FROM employee
         `;
         let namesData = await database.promise().query(namesQuery);
-        let firstNames = namesData[0].map(item => item["first_name"]);
-        let lastNames = namesData[0].map(item => item["last_name"]);
+        let firstNamesArr = namesData[0].map(item => item["first_name"]);
+        let lastNamesArr = namesData[0].map(item => item["last_name"]);
 
         // Populate the names array
-        for (let i = 0; i < firstNames.length; i++) {
+        for (let i = 0; i < firstNamesArr.length; i++) {
             // Combine first and last names into single string
-            namesArray.push(`${firstNames[i]} ${lastNames[i]}`);
+            namesArray.push(`${firstNamesArr[i]} ${lastNamesArr[i]}`);
 
         }
-        console.log(namesArray);
 
         // retrieve array of all available roles to display to user
         let rolesData = await database.promise().query(`SELECT title FROM role`);
@@ -52,7 +51,30 @@ async function updateEmployee() {
         let employeeName = updateData.fullName;
         let newTitle = updateData.newTitle;
 
-        console.log(employeeName, newTitle);
+        // Retrieve the first and last name of selected employee
+        let firstName = employeeName.split(" ")[0];
+        let lastName = employeeName.split(" ")[1];
+
+        // Given the name of the role, retrieve the role ID
+        let roleIDQuery = `
+        SELECT * FROM role
+        WHERE title = ?
+        `
+        let roleIDData = await database.promise().query(roleIDQuery, newTitle, (err) => console.log(err));
+        let newRoleID = roleIDData[0].map(item => item.id)[0];      //stores the id of the new role
+
+        console.log(newRoleID);
+
+        // query to update the role of the employee
+        let updateQuery = `
+        UPDATE employee
+        SET  role_id = ?
+        WHERE first_name = ? AND last_name = ?;
+        `;
+        database.execute(updateQuery, [newRoleID, firstName, lastName], (err) => {
+            err ? console.log('\n Error in updating Employee!', err) : console.log(`\n Role for ${firstName} ${lastName} updated to ${newTitle}!`);
+        });
+
     }
     catch (err) {
         console.log(err);
