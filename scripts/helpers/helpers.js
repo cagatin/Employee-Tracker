@@ -27,20 +27,20 @@ async function getTableArray(table, property) {
 
 // Function which checks if the table contains no values
 async function isEmpty(table) {
-    let query = `
-    SELECT * FROM ${table}
-    `;
+    try {
+        let query = `
+        SELECT * FROM ${table}
+        `;
 
-    database.execute(query, (err, res) => {
-        if (err) {
-            console.log(err);
-        }
-        if (res.length == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    })
+        let data = await database.promise().query(query);
+
+        const tableData = data[0];
+        return tableData.length == 0;
+    }
+    catch (err) {
+        console.log(err);
+        return;
+    }
 }
 
 module.exports = { capitalize, getTableArray, isEmpty }
