@@ -40,10 +40,35 @@ async function getBudget() {
     SELECT * FROM role 
     WHERE department_id = ?
     `;
-    let filteredRoleData = database.promise().execute(roleFilter, [deptID]);
-    console.log(filteredRoleData);
+    let filteredRoleData = await database.promise().execute(roleFilter, [deptID]);
+    let matchedRoles = filteredRoleData[0];
 
-    // filter employee table to only view ids of that role
+    // If no roles exist in that department, return. 
+    if (matchedRoles.length == 0) {
+        console.log('No employees in chosen Department!');
+        return;
+    }
+
+    //create an array of roleIDs
+    let roleIDArr = matchedRoles.map(item => item.id);
+
+    let conditionStr = '';
+    for (let i = 0; i < roleIDArr.length; i++) {
+        conditionStr += `role_id = ${roleIDArr[i]} OR `;
+        if (i == roleIDArr.length - 1) {
+            // remove the comma at the end of the condition string
+            conditionStr = conditionStr.substring(0, conditionStr.length - 3);
+        }
+    }
+
+    // filter employee table to only view ids of that role --> left join on role?
+    let empFilter = `
+    SELECT * FROM employee
+    WHERE ${conditionStr}
+    `;
+
+    let filteredEmployees = await database.promise().query(empFilter);
+    console.log(filteredEmployees[0]);
 
 }
 

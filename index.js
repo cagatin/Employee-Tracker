@@ -7,9 +7,10 @@ const database = require('./config/connection');
 const { viewDepartment, viewRole, viewEmployee } = require('./scripts/views/view');
 const { addDepartment, addRole, addEmployee } = require('./scripts/adds/add');
 const updateEmployee = require('./scripts/update/update');
+const getBudget = require('./scripts/budget/budget');
 
 // Questions to prompt user upon starting the application
-const options = ["View All Departments", "View All Roles", "View All Employees", "Add a Department", "Add a Role", "Add an Employee", "Update an Employee Role", "QUIT"];
+const options = ["View All Departments", "View All Roles", "View All Employees", "Add a Department", "Add a Role", "Add an Employee", "Update an Employee Role", "Get Total Utalized Budget", "QUIT"];
 
 // Main menu
 const mainMenu = [{
@@ -54,6 +55,10 @@ async function init() {
                 return;
             case "Update an Employee Role":
                 await updateEmployee();
+                init();
+                return;
+            case "Get Total Utalized Budget":
+                await getBudget();
                 init();
                 return;
             case "QUIT":
