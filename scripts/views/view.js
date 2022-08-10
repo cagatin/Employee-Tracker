@@ -8,7 +8,7 @@ let deptQuery = `
 SELECT dep.id as ID, dep.name as Name
 FROM department as dep
 `
-function viewDepartment() {
+async function viewDepartment() {
     console.log(isEmpty('department'));
     database.query(deptQuery, (err, res) => {
         err ? console.log("Error retrieving Department Table", err) : console.table('\n', res);
@@ -23,7 +23,7 @@ FROM role as r
 LEFT JOIN department as dep
 ON r.department_id = dep.id
 `
-function viewRole() {
+async function viewRole() {
     console.log(isEmpty('role'));
     database.query(roleQuery, (err, res) => {
         err ? console.log("Error retrieving Role Table", err) : console.table('\n', res);
@@ -40,7 +40,7 @@ ON emp.role_id = r.id
 LEFT JOIN department AS dep
 ON r.department_id = dep.id
 `
-function viewEmployee() {
+async function viewEmployee() {
     console.log(isEmpty('employee'));
     database.query(empQuery, (err, res) => {
         err ? console.log("Error retrieving Employee Table", err) : console.table('\n', res);

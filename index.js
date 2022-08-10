@@ -10,7 +10,6 @@ const updateEmployee = require('./scripts/update/update');
 
 // Questions to prompt user upon starting the application
 const options = ["View All Departments", "View All Roles", "View All Employees", "Add a Department", "Add a Role", "Add an Employee", "Update an Employee Role", "QUIT"];
-// todo? "Update an Employee Role", "Delete a Department", "Delete a Role", "Delete an Employee"
 
 // Main menu
 const mainMenu = [{
@@ -30,15 +29,15 @@ async function init() {
 
         switch (selectedOption) {
             case "View All Departments":
-                viewDepartment();
+                await viewDepartment();
                 init();
                 return;
             case "View All Roles":
-                viewRole();
+                await viewRole();
                 init();
                 return;
             case "View All Employees":
-                viewEmployee();
+                await viewEmployee();
                 init();
                 return;
             case "Add a Department":
@@ -57,15 +56,6 @@ async function init() {
                 await updateEmployee();
                 init();
                 return;
-            // case "Delete a Department":
-            //     // function to delete a department
-            //     return;
-            // case "Delete a Role":
-            //     // function to delete a role
-            //     return;
-            // case "Delete an Employee":
-            //     // function to delete a employee
-            //     return;
             case "QUIT":
                 continuePrompt = false;
                 database.end();
