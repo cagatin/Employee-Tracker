@@ -25,4 +25,22 @@ async function getTableArray(table, property) {
     return tableData.map((item) => item[`${property}`]);
 }
 
-module.exports = { capitalize, getTableArray }
+// Function which checks if the table contains no values
+async function isEmpty(table) {
+    let query = `
+    SELECT * FROM ${table}
+    `;
+
+    database.execute(query, (err, res) => {
+        if (err) {
+            console.log(err);
+        }
+        if (res.length == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    })
+}
+
+module.exports = { capitalize, getTableArray, isEmpty }

@@ -2,7 +2,7 @@
 const cTable = require('console.table');
 const database = require('../../config/connection');
 const Inquirer = require('inquirer');
-const { capitalize, getTableArray } = require('../helpers/helpers');
+const { capitalize, getTableArray, isEmpty } = require('../helpers/helpers');
 const e = require('express');
 
 // Function to update employee role

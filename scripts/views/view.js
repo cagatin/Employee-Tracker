@@ -1,6 +1,7 @@
 // Import required packages
 const cTable = require('console.table');
 const database = require('../../config/connection');
+const { capitalize, getTableArray, isEmpty } = require('../helpers/helpers');
 
 // function to view ALL deparments
 let deptQuery = `
@@ -8,6 +9,7 @@ SELECT dep.id as ID, dep.name as Name
 FROM department as dep
 `
 function viewDepartment() {
+    console.log(isEmpty('department'));
     database.query(deptQuery, (err, res) => {
         err ? console.log("Error retrieving Department Table", err) : console.table('\n', res);
     });
@@ -22,6 +24,7 @@ LEFT JOIN department as dep
 ON r.department_id = dep.id
 `
 function viewRole() {
+    console.log(isEmpty('role'));
     database.query(roleQuery, (err, res) => {
         err ? console.log("Error retrieving Role Table", err) : console.table('\n', res);
     });
@@ -38,6 +41,7 @@ LEFT JOIN department AS dep
 ON r.department_id = dep.id
 `
 function viewEmployee() {
+    console.log(isEmpty('employee'));
     database.query(empQuery, (err, res) => {
         err ? console.log("Error retrieving Employee Table", err) : console.table('\n', res);
     });
