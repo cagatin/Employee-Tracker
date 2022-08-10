@@ -40,7 +40,7 @@ async function viewRole() {
 // function to view ALL roles
 let empQuery = `
 SELECT emp.id, emp.first_name AS First, emp.last_name AS Last, r.title AS Title, dep.name AS Department, r.salary AS Salary, emp.manager_id AS Manager
-FROM employee as emp
+FROM employee AS emp
 LEFT JOIN role AS r
 ON emp.role_id = r.id
 LEFT JOIN department AS dep
