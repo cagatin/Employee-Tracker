@@ -3,6 +3,7 @@ const cTable = require('console.table');
 const database = require('../../config/connection');
 const Inquirer = require('inquirer');
 const { capitalize, getTableArray } = require('../helpers/helpers');
+const e = require('express');
 
 // Questions to ask for adding department
 const addDeptQuestions = [{
@@ -142,16 +143,15 @@ async function addEmployee() {
     // Employee is a manager, assign the manager_id a null value
     if (manager == 'None') {
         managerID = null;
+    } else {
+        //  Given name of manager, query to retrieve the ID.
+        let mngrIDQuery = `
+        SELECT * FROM employee
+        WHERE first_name = ?
+        `;
+        let managerIDData = await database.promise().query(mngrIDQuery, manager, (err) => console.log(err));
+        managerID = managerIDData[0].map(item => item.id)[0];      //stores the manager ID
     }
-
-    //  Given name of manager, query to retrieve the ID.
-    let mngrIDQuery = `
-    SELECT * FROM employee
-    WHERE first_name = ?
-    `;
-    let managerIDData = await database.promise().query(mngrIDQuery, manager, (err) => console.log(err));
-    managerID = managerIDData[0].map(item => item.id);      //stores the manager ID398529
-
 
     // Given the name of the role, retrieve the role ID
     let roleIDQuery = `
@@ -159,25 +159,34 @@ async function addEmployee() {
     WHERE title = ?
     `
     let roleIDData = await database.promise().query(roleIDQuery, role, (err) => console.log(err));
-    roleID = roleIDData[0].map(item => item.id);
+    roleID = roleIDData[0].map(item => item.id)[0];
+
 
     // Check to see if the employee is already in the Database
     let checkQuery = `
     SELECT * FROM employee WHERE first_name = ? AND last_name = ?;
     `
     database.execute(checkQuery, [first_name, last_name], (err, res) => {
+        if (err) {
+            console.log(err)
+        }
         if (res.length >= 1) {
             console.log("Employee is already in the Database! Please update employee instead.");
             return;
         } else {
+            console.log(`Then code gets to here`);
             // If the employee is NOT already in the database, add the employee
-            let insertQuery = `INSERT INTO employee (first_name, last_name, role_id, maanger_id)`
+            let insertQuery = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`;
+            database.execute(insertQuery, [first_name, last_name, roleID, managerID], (err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(`Sucessfully added ${first_name} ${last_name} to the database.`);
+                }
+            });
+            return;
         }
-    })
-
-    /* TODO
-     * CHECK TO SEE IF THE MANAGER ROLE == DEPARTMENT 
-    */
+    });
 }
 
 
