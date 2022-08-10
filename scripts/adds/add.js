@@ -2,35 +2,9 @@
 const cTable = require('console.table');
 const database = require('../../config/connection');
 const Inquirer = require('inquirer');
-const { default: inquirer } = require('inquirer');
+const { capitalize, getTableArray } = require('../helpers/helpers');
 
-// Function to generate an array of Department names
-async function getTableArray(table, property) {
-    let query = `
-    SELECT * FROM ${table}
-    `;
-    // Query for department table
-    const data = await database.promise().query(query);
-
-    // Extract table from query results
-    const tableData = data[0];
-
-    // Use array.map to retrieve only name: property values from the query result
-    return tableData.map((item) => item[`${property}`]);
-}
-
-let deptArray;
-
-
-// Function to capitalize the first letter in the user input
-function capitalize(str) {
-    let arrStr = str.split(" ");
-    for (let i = 0; i < arrStr.length; i++) {
-        arrStr[i] = arrStr[i].charAt(0).toUpperCase() + arrStr[i].slice(1);
-    }
-    return arrStr.join(" ");
-}
-
+// Questions to ask for adding department
 const addDeptQuestions = [{
     type: "input",
     message: "What is the name of the department?",
@@ -65,7 +39,7 @@ async function addDepartment() {
 
 // Function to add a role
 async function addRole() {
-    deptArray = await getTableArray('department', 'name');
+    let deptArray = await getTableArray('department', 'name');
     const addRoleQuestions = [
         {
             type: "input",
