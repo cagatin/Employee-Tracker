@@ -3,7 +3,6 @@ const cTable = require('console.table');
 const database = require('../../config/connection');
 const Inquirer = require('inquirer');
 const { capitalize, getTableArray } = require('../helpers/helpers');
-const e = require('express');
 
 // Questions to ask for adding department
 const addDeptQuestions = [{
@@ -99,7 +98,7 @@ async function addEmployee() {
     let managerData = await database.promise().query(managerQuery);
     let managerArr = managerData[0].map(item => item["first_name"]);
 
-    //append a null choice to manager array (Employee is a manager)
+    //append a null choice to manager array (Employee is a manager) to prompt the user
     managerArr.push('None');
 
     // questions to prompt user
