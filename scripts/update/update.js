@@ -47,14 +47,17 @@ async function updateEmployee() {
             }
         ];
 
+        // prompt the user
+        const updateData = await Inquirer.prompt(updateQuestions);
+        let employeeName = updateData.fullName;
+        let newTitle = updateData.newTitle;
 
-
-
-        return;
+        console.log(employeeName, newTitle);
     }
     catch (err) {
         console.log(err);
     }
+    return;
 }
 
 

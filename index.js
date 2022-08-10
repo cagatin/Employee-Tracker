@@ -53,7 +53,7 @@ async function init() {
                 init();
                 return;
             case "Update an Employee Role":
-                updateEmployee();
+                await updateEmployee();
                 init();
                 return;
             // case "Delete a Department":
