@@ -19,10 +19,18 @@ Then, create an ```.env``` file to store your login credentials for MYSQL. You c
 To run the application, you can simply run ```npm start``` to enter the main menu. <br/>
 
 #### IMPORTANT: 
-To use the feature which retrieves total utalized budget, you must <strong> disable </strong> the ```sql_mode = 'ONLY_FULL_GROUP_BY'```.
+To use the feature which retrieves total utalized budget, you must <strong> disable </strong> ```sql_mode = 'ONLY_FULL_GROUP_BY'``` or an error will eccur.
 
 ## Usage
-[Click here to view a demonstration video!](https://watch.screencastify.com/v/C4aaqoPChpx7rwpoUQZD)
+[Click here to view a demonstration video!](https://watch.screencastify.com/v/C4aaqoPChpx7rwpoUQZD) <br/>
+
+### Main Menu
+![](./assets/imgs/main_menu.PNG) <br/>
+When the user starts up the application, the user will be displayed a menu to navigate through different options. <br/>
+
+### Selection
+Using the up and down arrow keys, the user can select a multitude of different options, such as adding new roles, or viewing certain data. <br/>
+![](./assets/imgs/selection.PNG) <br/>
 
 ## Contribute
 To contribute to this project, fork the repository and send in a pull request! <br/>
