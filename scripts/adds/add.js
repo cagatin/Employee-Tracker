@@ -84,7 +84,7 @@ async function addRole() {
                 if (err) {
                     console.log('🔴 Error in creating role!', err);
                 }
-                console.log(`🟢 Role successfully added to the database!`)
+                console.log(`\n 🟢 Role successfully added to the database!`)
             });
             return;
         }
@@ -181,7 +181,7 @@ async function addEmployee() {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log(`🟢 Sucessfully added ${first_name} ${last_name} to the database.`);
+                    console.log(`\n 🟢 Sucessfully added ${first_name} ${last_name} to the database.`);
                 }
             });
             return;
