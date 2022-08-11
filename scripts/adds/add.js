@@ -31,7 +31,7 @@ async function addDepartment() {
                 if (err) {
                     console.log('\n 🔴 Issue in creating department', err);
                 }
-                console.log(`🟢 Department successfully added to the database!`)
+                console.log(`\n🟢 Department successfully added to the database!`)
             });
             return;
         }
