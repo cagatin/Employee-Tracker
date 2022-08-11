@@ -19,7 +19,7 @@ Then, create an ```.env``` file to store your login credentials for MYSQL. You c
 To run the application, you can simply run ```npm start``` to enter the main menu. <br/>
 
 #### IMPORTANT: 
-To use the feature which retrieves total utalized budget, you must <strong> disable </strong> ```sql_mode = 'ONLY_FULL_GROUP_BY'``` or an error will eccur.
+To use the feature which retrieves total utalized budget, you must <strong> disable </strong> ```sql_mode = 'ONLY_FULL_GROUP_BY'``` or an error will eccur. [Click here](https://stackoverflow.com/questions/23921117/disable-only-full-group-by) for a full guide for disabling only_full_group_by.
 
 ## Usage
 [Click here to view a demonstration video!](https://watch.screencastify.com/v/C4aaqoPChpx7rwpoUQZD) <br/>
