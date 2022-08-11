@@ -10,11 +10,11 @@ FROM department as dep
 `
 async function viewDepartment() {
     if (await isEmpty('department')) {
-        console.log("\n Department Database is EMPTY! ADD Departments to view table.");
+        console.log("\n 🔴 Department Database is EMPTY! ADD Departments to view table.");
         return;
     }
     database.query(deptQuery, (err, res) => {
-        err ? console.log("Error retrieving Department Table", err) : console.table('\n', res);
+        err ? console.log("🔴 Error retrieving Department Table", err) : console.table('\n', res);
     });
     return;
 }
@@ -28,11 +28,11 @@ ON r.department_id = dep.id
 `
 async function viewRole() {
     if (await isEmpty('role')) {
-        console.log("\n  Role Database is EMPTY! ADD Roles to view table.");
+        console.log("\n 🔴 Role Database is EMPTY! ADD Roles to view table.");
         return;
     }
     database.query(roleQuery, (err, res) => {
-        err ? console.log("Error retrieving Role Table", err) : console.table('\n', res);
+        err ? console.log("🔴 Error retrieving Role Table", err) : console.table('\n', res);
     });
     return;
 }
@@ -48,11 +48,11 @@ ON r.department_id = dep.id
 `
 async function viewEmployee() {
     if (await isEmpty('role')) {
-        console.log("\n  Role Database is EMPTY! ADD Roles to view table.");
+        console.log("\n 🔴 Role Database is EMPTY! ADD Roles to view table.");
         return;
     }
     database.query(empQuery, (err, res) => {
-        err ? console.log("Error retrieving Employee Table", err) : console.table('\n', res);
+        err ? console.log("🔴 Error retrieving Employee Table", err) : console.table('\n', res);
     });
     return;
 }

@@ -10,7 +10,7 @@ const { capitalize, getTableArray, isEmpty } = require('../helpers/helpers');
 
 async function getBudget() {
     if (await isEmpty('employee')) {
-        console.log('No employees present in the database! Cannot retrieve Total Utilized Budget!');
+        console.log('🔴 No employees present in the database! Cannot retrieve Total Utilized Budget!');
         return;
     }
 
@@ -35,41 +35,20 @@ async function getBudget() {
     let deptIDArr = await database.promise().query('SELECT * FROM department WHERE name = ?', dept, err => console.log(err));
     let deptID = deptIDArr[0].map(item => item["id"])[0];
 
-    // filter role data to only view titles of that department
-    let roleFilter = `
-    SELECT * FROM role 
-    WHERE department_id = ?
-    `;
-    let filteredRoleData = await database.promise().execute(roleFilter, [deptID]);
-    let matchedRoles = filteredRoleData[0];
+    let joinQuery = `
+    SELECT employee.first_name, employee.last_name,  SUM(role.salary) AS total_budget, department.name, department.id, role.department_id
+    FROM department
+    LEFT JOIN role
+    ON department.id = role.department_id
+    LEFT JOIN employee
+    ON employee.role_id = role.id
+    WHERE department_id = ?;
+    `
 
-    // If no roles exist in that department, return. 
-    if (matchedRoles.length == 0) {
-        console.log('No employees in chosen Department!');
-        return;
-    }
+    let budgetData = await database.promise().execute(joinQuery, [deptID]);
+    let totalBudget = budgetData[0].map(item => item.total_budget)[0];
 
-    //create an array of roleIDs
-    let roleIDArr = matchedRoles.map(item => item.id);
-
-    let conditionStr = '';
-    for (let i = 0; i < roleIDArr.length; i++) {
-        conditionStr += `role_id = ${roleIDArr[i]} OR `;
-        if (i == roleIDArr.length - 1) {
-            // remove the comma at the end of the condition string
-            conditionStr = conditionStr.substring(0, conditionStr.length - 3);
-        }
-    }
-
-    // filter employee table to only view ids of that role --> left join on role?
-    let empFilter = `
-    SELECT * FROM employee
-    WHERE ${conditionStr}
-    `;
-
-    let filteredEmployees = await database.promise().query(empFilter);
-    console.log(filteredEmployees[0]);
-
+    totalBudget == 0 ? console.log('No Employee Salary Data in the Database!') : console.log(`🟢 Total Utalized Budget for ${bdgQuestioNData.department} is $${totalBudget}.`);
 }
 
 module.exports = getBudget;

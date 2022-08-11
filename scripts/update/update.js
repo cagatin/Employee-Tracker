@@ -71,7 +71,7 @@ async function updateEmployee() {
         WHERE first_name = ? AND last_name = ?;
         `;
         database.execute(updateQuery, [newRoleID, firstName, lastName], (err) => {
-            err ? console.log('\n Error in updating Employee!', err) : console.log(`\n Role for ${firstName} ${lastName} updated to ${newTitle}!`);
+            err ? console.log('\n 🔴 Error in updating Employee!', err) : console.log(`\n 🟢 Role for ${firstName} ${lastName} updated to ${newTitle}!`);
         });
 
     }

@@ -22,15 +22,16 @@ async function addDepartment() {
     database.execute(searchDept, deptToAdd, (err, res) => {
         // If the department is already present in the database, return
         if (res.length >= 1) {
-            console.log("\n Department is already in the Database!");
+            console.log("\n 🔴 Department is already in the Database!");
             return;
         } else {
             // Otherwise, add the department
             let deptQuery = `INSERT INTO department (name) VALUES (?);`
             database.execute(deptQuery, deptToAdd, (err) => {
                 if (err) {
-                    console.log('\n Issue in creating department', err);
+                    console.log('\n 🔴 Issue in creating department', err);
                 }
+                console.log(`🟢 Department successfully added to the database!`)
             });
             return;
         }
@@ -75,14 +76,15 @@ async function addRole() {
     let existQuery = "SELECT * FROM role WHERE title = ?";
     database.execute(existQuery, [role], (err, res) => {
         if (res.length >= 1) {
-            console.log('\n Role already exists within the database!');
+            console.log('\n 🔴 Role already exists within the database!');
             return;
         } else {
             let createQuery = 'INSERT INTO role (title, salary, department_id) values (?, ?, ?);';
             database.execute(createQuery, [role, salary, deptID], (err) => {
                 if (err) {
-                    console.log('Error in creating role!', err);
+                    console.log('🔴 Error in creating role!', err);
                 }
+                console.log(`🟢 Role successfully added to the database!`)
             });
             return;
         }
@@ -170,17 +172,16 @@ async function addEmployee() {
             console.log(err)
         }
         if (res.length >= 1) {
-            console.log("Employee is already in the Database! Please update employee instead.");
+            console.log("🔴 Employee is already in the Database! Please update employee instead.");
             return;
         } else {
-            console.log(`Then code gets to here`);
             // If the employee is NOT already in the database, add the employee
             let insertQuery = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`;
             database.execute(insertQuery, [first_name, last_name, roleID, managerID], (err) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log(`Sucessfully added ${first_name} ${last_name} to the database.`);
+                    console.log(`🟢 Sucessfully added ${first_name} ${last_name} to the database.`);
                 }
             });
             return;
